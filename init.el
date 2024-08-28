@@ -132,6 +132,7 @@
 (setq column-number-mode t)
 (setq auto-save-default nil)
 (setq global-visual-line-mode t)
+(setq-default line-spacing .2)
 
 (setq backup-directory-alist `(("." . ,bpo/backup-dir)))
 (setq make-backup-files t               ; backup of a file the first time it is saved.
