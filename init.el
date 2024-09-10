@@ -376,6 +376,8 @@
 )
 
 (use-package org
+  :hook
+  (org-mode . valign-mode)
   :config
   (setq org-todo-keywords '("TODO" "IN-PROGRESS" "ON-HOLD" "DONE")
 	org-todo-keyword-faces
@@ -384,6 +386,8 @@
 	)
       )
   )
+
+(use-package org-kanban)
 
 (use-package lsp-mode
   :init
