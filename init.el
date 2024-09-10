@@ -351,6 +351,12 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
+(defun treemacs-file-and-symbols ()
+  (interactive)
+  (treemacs)
+  (lsp-treemacs-symbols))
+
+
 (use-package treemacs)
 
 (use-package hydra)
@@ -364,12 +370,14 @@
   :config
   (general-define-key
    "C-M-j" 'counsel-switch-buffer
-   "C-M-y" 'hydra-text-scale/body)
+   "C-M-y" 'hydra-text-scale/body
+   "C-M-t" 'treemacs-file-and-symbols
+   )
 )
 
 (use-package org
   :config
-  (setq org-todo-keywords '("TODO" "IN-PROGRESS" "DONE")
+  (setq org-todo-keywords '("TODO" "IN-PROGRESS" "ON-HOLD" "DONE")
 	org-todo-keyword-faces
 	'(
 	  ("IN-PROGRESS" . (:weight bold :color "yellow"))
@@ -430,6 +438,8 @@
   :demand t
   :bind
   ("C-c n" . sharper-main-transient))
+
+(use-package csproj-mode)
 
 ;; Finish package__________________________________________________________________
 
