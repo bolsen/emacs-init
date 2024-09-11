@@ -366,7 +366,11 @@
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
 
+(use-package valign)
+
 (use-package org
+  :hooks
+  (org-mode . valign-mode)
   :config
   (setq org-todo-keywords '("TODO" "IN-PROGRESS" "ON-HOLD" "DONE")
 	org-todo-keyword-faces
