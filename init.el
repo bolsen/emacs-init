@@ -351,7 +351,7 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-(defun treemacs-file-and-symbols ()
+(defun bpo/treemacs-file-and-symbols ()
   (interactive)
   (treemacs)
   (lsp-treemacs-symbols))
@@ -366,18 +366,7 @@
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
 
-(use-package general
-  :config
-  (general-define-key
-   "C-M-j" 'counsel-switch-buffer
-   "C-M-y" 'hydra-text-scale/body
-   "C-M-t" 'treemacs-file-and-symbols
-   )
-)
-
 (use-package org
-  :hook
-  (org-mode . valign-mode)
   :config
   (setq org-todo-keywords '("TODO" "IN-PROGRESS" "ON-HOLD" "DONE")
 	org-todo-keyword-faces
@@ -444,6 +433,20 @@
   ("C-c n" . sharper-main-transient))
 
 (use-package csproj-mode)
+
+;; Collected key bindings__________________________________________________________
+
+(use-package general
+  :config
+  (general-define-key
+   "C-M-j" 'counsel-switch-buffer
+   "C-M-y" 'hydra-text-scale/body
+   "C-M-t" 'bpo/treemacs-file-and-symbols
+   ;; org-kanban
+   "M-o s" 'org-kanban/shift
+   )
+)
+
 
 ;; Finish package__________________________________________________________________
 
