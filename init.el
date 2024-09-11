@@ -376,6 +376,7 @@
 	org-todo-keyword-faces
 	'(
 	  ("IN-PROGRESS" . (:weight bold :color "yellow"))
+          ("ON-HOLD" . (:weight bold :color "white"))
 	)
       )
   )
