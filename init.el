@@ -369,9 +369,12 @@
 (use-package valign)
 
 (use-package org
-  :hooks
+  :hook
   (org-mode . valign-mode)
   :config
+  (global-set-key (kbd "C-c l") #'org-store-link)
+  (global-set-key (kbd "C-c a") #'org-agenda)
+  (global-set-key (kbd "C-c c") #'org-capture)
   (setq org-todo-keywords '("TODO" "IN-PROGRESS" "ON-HOLD" "DONE")
 	org-todo-keyword-faces
 	'(
