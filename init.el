@@ -385,6 +385,7 @@
   )
 
 (use-package org-kanban)
+(use-package org-download)
 
 (use-package lsp-mode
   :init
