@@ -442,6 +442,7 @@
   ("C-c n" . sharper-main-transient))
 
 (use-package csproj-mode)
+(use-package fsharp-mode)
 
 ;; Collected key bindings__________________________________________________________
 
