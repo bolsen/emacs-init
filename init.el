@@ -454,6 +454,8 @@
    "C-M-t" 'bpo/treemacs-file-and-symbols
    ;; org-kanban
    "M-o s" 'org-kanban/shift
+   "C-+" 'text-scale-increase
+   "C--" 'text-scale-decrease
    )
 )
 
