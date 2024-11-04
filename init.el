@@ -387,6 +387,8 @@
 (use-package org-kanban)
 (use-package org-download)
 
+(use-package lua-mode)
+
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -399,6 +401,7 @@
   (shell-mode . lsp-deferred)
   (typescript-ts-mode . lsp-deferred)
   (csharp-mode . lsp-deferred)
+  (lua-mode . lsp-deferred)
 
   ;; which-key integration
   (lsp-mode . lsp-enable-which-key-integration)
