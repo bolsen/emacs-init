@@ -294,6 +294,7 @@
   :init (telephone-line-mode +1))
 
 (use-package all-the-icons)
+(use-package nerd-icons)
 (use-package all-the-icons-dired
   :if (display-graphic-p)
   :hook (dired-mode . all-the-icons-dired-mode)
