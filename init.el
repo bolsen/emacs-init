@@ -69,8 +69,29 @@
   :type 'symbol
   :group 'bpo/init)
 
+(defcustom bpo/projects
+  "~/Projects"
+  "The primary location for all projects that I am working on."
+  :type 'string
+  :group 'bpo/init)
+
+(defcustom bpo/emacs-init-repo-path
+  (expand-file-name (file-name-concat bpo/projects "emacs-init" "init.el"))
+  "The primary location for all projects that I am working on."
+  :type 'string
+  :group 'bpo/init)
+
 ;; setup required files_________________________________________________________
 ;; Files and directories need to be created if not they don't exist for fresh installs.
+
+(defun bpo/install-init-file ()
+  "Install init file into .emacs.d location.
+Having to fumble with symlinks in Windows made me
+just do copies of the init file."
+  (interactive)
+  (copy-file bpo/emacs-init-repo-path bpo/emacs-d-path :ok-if-already-exists t)
+  (message "Copied %s to %s" bpo/emacs-init-repo-path bpo/emacs-d-path)
+  )
 
 (defun bpo/install-fonts ()
   "This must be done on a fresh install."
@@ -90,7 +111,20 @@
 	  )))
 
 (bpo/create-files (list bpo/temp-path bpo/backup-dir)
-		  (list bpo/savehist-file bpo/custom-file))
+                  (list bpo/savehist-file bpo/custom-file))
+;; Helper functions________________________________________________________________
+
+;; key is below
+(defun bpo/goto-projects-dir (&optional dir)
+  "Send to the dired buffer of projects."
+  (interactive "DProject: ")
+  (if (not dir)
+      (dired (expand-file-name bpo/projects))
+    (dired dir)))
+
+(defun bpo/copy-init-file ()
+  (interactive)
+  (let ((repo-path))))
 
 ;; setup for package_______________________________________________________________
 (require 'package)
@@ -456,12 +490,13 @@
    "C-M-j" 'counsel-switch-buffer
    "C-M-y" 'hydra-text-scale/body
    "C-M-t" 'bpo/treemacs-file-and-symbols
+   "C-M-p" 'bpo/goto-projects-dir
+   "C-M-i" 'bpo/install-init-file
    ;; org-kanban
    "M-o s" 'org-kanban/shift
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
-   )
-)
+   ))
 
 
 ;; Finish package__________________________________________________________________
