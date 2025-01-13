@@ -81,6 +81,18 @@
   :type 'string
   :group 'bpo/init)
 
+(defcustom bpo/hooks-to-remove-dos-eols
+  '(csharp-mode-hook
+  js-json-mode-hook
+  js-mode-hook
+  fundamental-mode-hook
+  org-mode-hook
+  nxml-mode-hook
+  web-mode)
+  "Hooks for modes to not show EOLs."
+  :type 'list
+  :group 'bpo/init)
+
 ;; setup required files_________________________________________________________
 ;; Files and directories need to be created if not they don't exist for fresh installs.
 
@@ -167,6 +179,7 @@ just do copies of the init file."
 (setq auto-save-default nil)
 (setq global-visual-line-mode t)
 (setq-default line-spacing .3)
+(setq make-backup-files nil)
 
 (setq backup-directory-alist `(("." . ,bpo/backup-dir)))
 (setq make-backup-files t               ; backup of a file the first time it is saved.
@@ -258,6 +271,9 @@ just do copies of the init file."
   (aset buffer-display-table ?\^M []))
 
 (when (eq system-type 'windows-nt)
+  (dolist (hook bpo/hooks-to-remove-dos-eols)
+    (add-hook hook 'remove-dos-eol)))
+
   (progn
     (add-hook 'csharp-mode-hook 'remove-dos-eol)
     (add-hook 'js-json-mode-hook 'remove-dos-eol)
@@ -265,7 +281,8 @@ just do copies of the init file."
     (add-hook 'fundamental-mode-hook 'remove-dos-eol)
     (add-hook 'org-mode-hook 'remove-dos-eol)
     (add-hook 'nxml-mode-hook 'remove-dos-eol)
-    ))
+    (add-hook 'web-mode-hook 'remove-dos-eol)
+    )
 
 (setq-default indent-tabs-mode nil)
 
