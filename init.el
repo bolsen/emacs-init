@@ -490,6 +490,8 @@ just do copies of the init file."
   (setq sp-base-key-bindings 'sp)
   (require 'smartparens-config))
 
+(use-package parinfer-rust-mode)
+
 (use-package ag)
 
 (use-package sharper
