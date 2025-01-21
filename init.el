@@ -69,8 +69,41 @@
   :type 'symbol
   :group 'bpo/init)
 
+(defcustom bpo/projects
+  "~/Projects"
+  "The primary location for all projects that I am working on."
+  :type 'string
+  :group 'bpo/init)
+
+(defcustom bpo/emacs-init-repo-path
+  (expand-file-name (file-name-concat bpo/projects "emacs-init" "init.el"))
+  "The primary location for all projects that I am working on."
+  :type 'string
+  :group 'bpo/init)
+
+(defcustom bpo/hooks-to-remove-dos-eols
+  '(csharp-mode-hook
+  js-json-mode-hook
+  js-mode-hook
+  fundamental-mode-hook
+  org-mode-hook
+  nxml-mode-hook
+  web-mode)
+  "Hooks for modes to not show EOLs."
+  :type 'list
+  :group 'bpo/init)
+
 ;; setup required files_________________________________________________________
 ;; Files and directories need to be created if not they don't exist for fresh installs.
+
+(defun bpo/install-init-file ()
+  "Install init file into .emacs.d location.
+Having to fumble with symlinks in Windows made me
+just do copies of the init file."
+  (interactive)
+  (copy-file bpo/emacs-init-repo-path bpo/emacs-d-path :ok-if-already-exists t)
+  (message "Copied %s to %s" bpo/emacs-init-repo-path bpo/emacs-d-path)
+  )
 
 (defun bpo/install-fonts ()
   "This must be done on a fresh install."
@@ -91,6 +124,19 @@
 
 (bpo/create-files (list bpo/temp-path bpo/backup-dir)
                   (list bpo/savehist-file bpo/custom-file))
+;; Helper functions________________________________________________________________
+
+;; key is below
+(defun bpo/goto-projects-dir (&optional dir)
+  "Send to the dired buffer of projects."
+  (interactive "DProject: ")
+  (if (not dir)
+      (dired (expand-file-name bpo/projects))
+    (dired dir)))
+
+(defun bpo/copy-init-file ()
+  (interactive)
+  (let ((repo-path))))
 
 ;; setup for package_______________________________________________________________
 (require 'package)
@@ -133,6 +179,7 @@
 (setq auto-save-default nil)
 (setq global-visual-line-mode t)
 (setq-default line-spacing .3)
+(setq make-backup-files nil)
 
 (setq backup-directory-alist `(("." . ,bpo/backup-dir)))
 (setq make-backup-files t               ; backup of a file the first time it is saved.
@@ -225,6 +272,9 @@
   (aset buffer-display-table ?\^M []))
 
 (when (eq system-type 'windows-nt)
+  (dolist (hook bpo/hooks-to-remove-dos-eols)
+    (add-hook hook 'remove-dos-eol)))
+
   (progn
     (add-hook 'csharp-mode-hook 'remove-dos-eol)
     (add-hook 'js-json-mode-hook 'remove-dos-eol)
@@ -232,7 +282,8 @@
     (add-hook 'fundamental-mode-hook 'remove-dos-eol)
     (add-hook 'org-mode-hook 'remove-dos-eol)
     (add-hook 'nxml-mode-hook 'remove-dos-eol)
-    ))
+    (add-hook 'web-mode-hook 'remove-dos-eol)
+    )
 
 (setq-default indent-tabs-mode nil)
 
@@ -460,12 +511,13 @@
    "C-M-j" 'counsel-switch-buffer
    "C-M-y" 'hydra-text-scale/body
    "C-M-t" 'bpo/treemacs-file-and-symbols
+   "C-M-p" 'bpo/goto-projects-dir
+   "C-M-i" 'bpo/install-init-file
    ;; org-kanban
    "M-o s" 'org-kanban/shift
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
-   )
-)
+   ))
 
 
 ;; Finish package__________________________________________________________________
