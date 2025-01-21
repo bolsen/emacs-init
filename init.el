@@ -58,7 +58,7 @@
      [simple-query "duckduckgo.com" "duckduckgo.com/?q=" ""])
     ("Emacs Wiki" .
      [simple-query "www.emacswiki.org" "www.emacswiki.org/cgi-bin/wiki/"
-		   ""]))
+                   ""]))
   "List of sites for webjump."
   :type '(alist)
   :group 'bpo/init)
@@ -86,19 +86,19 @@
 
   (dolist (file files)
     (if (not (file-exists-p file))
-	  (with-temp-buffer (write-file file))
-	  )))
+          (with-temp-buffer (write-file file))
+          )))
 
 (bpo/create-files (list bpo/temp-path bpo/backup-dir)
-		  (list bpo/savehist-file bpo/custom-file))
+                  (list bpo/savehist-file bpo/custom-file))
 
 ;; setup for package_______________________________________________________________
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-			 ("org" . "https://orgmode.org/elpa/")
-			 ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
@@ -155,10 +155,10 @@
 
 (setq savehist-additional-variables
       '(
-	projectile-project-command-history
-	kill-ring
-	search-ring
-	regexp-search-ring)
+        projectile-project-command-history
+        kill-ring
+        search-ring
+        regexp-search-ring)
       savehist-autosave-interval 60
       savehist-file bpo/savehist-file)
 (savehist-mode +1)
@@ -174,6 +174,7 @@
 
 (recentf-mode +1)
 (desktop-save-mode 1)
+(visual-line-mode 1)
 
 (require 'tramp)
 ;; keep in mind known issues with zsh - see emacs wiki
@@ -246,21 +247,21 @@
   :config (setq ivy-use-virtual-buffers t)
   :init (ivy-mode)
   :bind (("C-s" . swiper)
-	 :map ivy-minibuffer-map
-	 ("TAB" . ivy-alt-done)
-	 ("C-l" . ivy-alt-done)
-	 ("C-j" . ivy-next-line)
-	 ("C-k" . ivy-previous-line)
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
 
-	 :map ivy-switch-buffer-map
-	 ("C-k" . ivy-previous-line)
-	 ("C-l" . ivy-alt-done)
-	 ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-alt-done)
+         ("C-d" . ivy-switch-buffer-kill)
 
-	 :map ivy-reverse-i-search-map
-	 ("C-k" . ivy-previous-line)
-	 ("C-d" . ivy-reverse-i-search-kill)
-	 )
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill)
+         )
   :init
   (ivy-mode +1))
 
@@ -270,12 +271,12 @@
 
 (use-package counsel
   :bind (
-	 ("M-x" . counsel-M-x)
-	 ("C-x b" . counsel-switch-buffer)
-	 ("C-x C-f" . counsel-find-file)
-	 :map minibuffer-local-map
-	 ("C-r" . counsel-minibuffer-history
-	  )))
+         ("M-x" . counsel-M-x)
+         ("C-x b" . counsel-switch-buffer)
+         ("C-x C-f" . counsel-find-file)
+         :map minibuffer-local-map
+         ("C-r" . counsel-minibuffer-history
+          )))
 
 (use-package ivy-avy)
 
@@ -286,11 +287,11 @@
 
 (use-package telephone-line
   :config (setq telephone-line-height 30
-		telephone-line-primary-left-separator 'telephone-line-sin-left
-		telephone-line-secondary-left-separator 'telephone-line-sin-hollow-left
-		telephone-line-primary-right-separator 'telephone-line-sin-right
-		telephone-line-secondary-right-separator 'telephone-line-sin-hollow-right
-		)
+                telephone-line-primary-left-separator 'telephone-line-sin-left
+                telephone-line-secondary-left-separator 'telephone-line-sin-hollow-left
+                telephone-line-primary-right-separator 'telephone-line-sin-right
+                telephone-line-secondary-right-separator 'telephone-line-sin-hollow-right
+                )
   :init (telephone-line-mode +1))
 
 (use-package all-the-icons)
@@ -323,9 +324,9 @@
   :ensure t
   :init (multiple-cursors-mode +1)
   :bind (
-	 ("C->" . mc/mark-next-like-this)
-	 ("C-<" . mc/mark-previous-like-this)
-	 ("C-c C-<" . mc/mark-all-like-this)))
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
 
 (use-package company
   :init (global-company-mode t))
@@ -336,7 +337,7 @@
 (use-package whitespace
   :init
   (setq whitespace-style '(face tabs empty trailing lines-tail)
-	whitespace-line-column 500)
+        whitespace-line-column 500)
   (global-whitespace-mode +1))
 
 (use-package magit)
@@ -377,11 +378,11 @@
   (global-set-key (kbd "C-c a") #'org-agenda)
   (global-set-key (kbd "C-c c") #'org-capture)
   (setq org-todo-keywords '("TODO" "IN-PROGRESS" "ON-HOLD" "DONE")
-	org-todo-keyword-faces
-	'(
-	  ("IN-PROGRESS" . (:weight bold :color "yellow"))
+        org-todo-keyword-faces
+        '(
+          ("IN-PROGRESS" . (:weight bold :color "yellow"))
           ("ON-HOLD" . (:weight bold :color "white"))
-	)
+        )
       )
   )
 
@@ -412,11 +413,11 @@
   :config
   (setq lsp-ui-sideline-show-code-actions t)
   (define-key lsp-ui-mode-map
-	      [remap xref-find-definitions]
-	      #'lsp-ui-peek-find-definitions)
+              [remap xref-find-definitions]
+              #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map
-	      [remap xref-find-references]
-	      #'lsp-ui-peek-find-references)
+              [remap xref-find-references]
+              #'lsp-ui-peek-find-references)
   (lsp-ui-doc-mode 1)
   (setq lsp-ui-doc-enable 1)
   (setq lsp-ui-doc-show-with-cursor 1)
@@ -447,6 +448,9 @@
 
 (use-package csproj-mode)
 (use-package fsharp-mode)
+(use-package sly)
+(load "~/quicklisp/log4sly-setup.el")
+(global-log4sly-mode 1)
 
 ;; Collected key bindings__________________________________________________________
 
