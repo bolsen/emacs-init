@@ -138,6 +138,10 @@ just do copies of the init file."
   (interactive)
   (let ((repo-path))))
 
+(defun bpo/insert-shrug ()
+  (interactive)
+  (insert "¯\\_(ツ)_/¯"))
+
 ;; setup for package_______________________________________________________________
 (require 'package)
 
@@ -353,7 +357,7 @@ just do copies of the init file."
   )
 
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook (prog-mode lisp-mode sly-mrepl-mode))
 
 (use-package which-key
   :init (which-key-mode)
@@ -439,7 +443,6 @@ just do copies of the init file."
 
 (use-package org-kanban)
 (use-package org-download)
-
 (use-package lua-mode)
 
 (use-package lsp-mode
@@ -484,13 +487,27 @@ just do copies of the init file."
 
 (use-package smartparens-mode
   :ensure smartparens
-  :hook (prog-mode text-mode markdown-mode c-mode c++-mode python-mode)
-  :config
+  :hook (prog-mode text-mode markdown-mode c-mode c++-mode python-mode emacs-lisp-mode lisp-mode sly-mrepl-mode)
+  :init
   ;; load default config
-  (setq sp-base-key-bindings 'sp)
-  (require 'smartparens-config))
 
-(use-package parinfer-rust-mode)
+  (setq sp-base-key-bindings 'sp)
+  (require 'smartparens-config)
+
+  ;; These are changes related to the fact that I have these bindings burnt into my brain and hate
+  ;; that the sp-*slurp* functionality takes over it. Paredit/sp by default breaks ones head too much.
+  (define-key smartparens-mode-map (kbd "C-<left>") 'left-word)
+  (define-key smartparens-mode-map (kbd "C-<right>") 'right-word)
+  (define-key smartparens-mode-map (kbd "C-c C-<left>") 'sp-forward-barf-sexp)
+  (define-key smartparens-mode-map (kbd "C-c C-<right>") 'sp-forward-slurp-sexp)
+
+  (define-key smartparens-mode-map (kbd "M-<backspace>") 'backward-kill-word)
+  (define-key smartparens-mode-map (kbd "C-c M-<backspace>") 'sp-unwrap-sexp))
+
+;;  :init
+  ;; load default config
+;;  (setq sp-base-key-bindings 'sp)
+;;  (require 'smartparens-config))
 
 (use-package ag)
 
@@ -502,8 +519,16 @@ just do copies of the init file."
 (use-package csproj-mode)
 (use-package fsharp-mode)
 (use-package sly)
-(load "~/quicklisp/log4sly-setup.el")
-(global-log4sly-mode 1)
+;; (load "~/quicklisp/log4sly-setup.el")
+;; (global-log4sly-mode 1)
+
+(use-package rg)
+(setq rg-executable "/usr/bin/rg")
+
+(use-package wgrep)
+
+(use-package vterm)
+(use-package multi-vterm :ensure t)
 
 ;; Collected key bindings__________________________________________________________
 
@@ -515,10 +540,14 @@ just do copies of the init file."
    "C-M-t" 'bpo/treemacs-file-and-symbols
    "C-M-p" 'bpo/goto-projects-dir
    "C-M-i" 'bpo/install-init-file
+   "C-M-o" 'bpo/insert-shrug
    ;; org-kanban
    "M-o s" 'org-kanban/shift
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
+   "C-(" 'sp-forward-slurp-sexp
+   "C-)" 'sp-forward-barf-sexp
+   "C-c C-m v" 'multi-vterm
    ))
 
 

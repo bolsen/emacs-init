@@ -1,0 +1,1 @@
+sudo apt install libgtk-3-dev libgccjit-14-dev libgif-dev libxpm-dev libjpeg-dev libtiff-dev libtree-sitter-dev libxml2-dev  && ./configure --with-x-toolkit=gtk3 --with-native-compilation --with-tree-sitter
