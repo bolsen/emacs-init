@@ -389,6 +389,8 @@ just do copies of the init file."
 (use-package flycheck
   :init (global-flycheck-mode +1))
 
+(use-package golden-ratio-mode)
+
 (use-package whitespace
   :init
   (setq whitespace-style '(face tabs empty trailing lines-tail)
