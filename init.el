@@ -291,6 +291,17 @@ just do copies of the init file."
 
 (setq-default indent-tabs-mode nil)
 
+(setq display-buffer-alist
+      ;; For sane use of SLY debugger in a contextual window
+      '(("\\*sly-db"
+
+         (display-buffer-reuse-mode-window
+          display-buffer-below-selected)
+
+         ;; parameters
+         (window-height . fit-window-to-buffer)
+         (dedicated . t))))
+
 ;; end Simplify UI______________________________________________________________
 ;; package configurations_______________________________________________________
 
