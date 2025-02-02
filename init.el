@@ -400,7 +400,7 @@ just do copies of the init file."
 (use-package flycheck
   :init (global-flycheck-mode +1))
 
-(use-package golden-ratio-mode)
+(use-package golden-ratio)
 
 (use-package whitespace
   :init
