@@ -299,7 +299,6 @@ just do copies of the init file."
           display-buffer-below-selected)
 
          ;; parameters
-         (window-height . fit-window-to-buffer)
          (dedicated . t))))
 
 ;; end Simplify UI______________________________________________________________
