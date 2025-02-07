@@ -184,6 +184,10 @@ just do copies of the init file."
 (setq global-visual-line-mode t)
 (setq-default line-spacing .3)
 (setq make-backup-files nil)
+(setq create-lockfiles nil)
+;; (setq lock-file-name-transforms
+;;      '(("\\`/.*/\\([^/]+\\)\\'" "/var/tmp/\\1" t)))
+
 
 (setq backup-directory-alist `(("." . ,bpo/backup-dir)))
 (setq make-backup-files t               ; backup of a file the first time it is saved.
@@ -335,6 +339,8 @@ just do copies of the init file."
   (ivy-rich-mode 1))
 
 (use-package counsel
+  :config
+  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "")
   :bind (
          ("M-x" . counsel-M-x)
          ("C-x b" . counsel-switch-buffer)
