@@ -142,6 +142,22 @@ just do copies of the init file."
   (interactive)
   (insert "¯\\_(ツ)_/¯"))
 
+;; I stole this from tsoding: https://www.youtube.com/watch?v=81MdyDYqB-A&t=3917s
+(defun bpo/duplicate-line ()
+  "Duplicate current line"
+  (interactive)
+  (let ((column (- (point) (pos-bol)))
+        (line (let ((s (thing-at-point 'line t)))
+                (if s (string-remove-prefix "\n" s)))))
+    (move-end-of-line 1)
+    (newline)
+    (insert line)
+    (move-beginning-of-line 1)
+    (previous-line)
+    (forward-char column)))
+
+(global-set-key (kbd "C-c 9") 'bpo/duplicate-line)
+
 ;; setup for package_______________________________________________________________
 (require 'package)
 
@@ -467,6 +483,12 @@ just do copies of the init file."
   :init
   (setq lsp-keymap-prefix "C-c l")
   (setq lsp-csharp-omnisharp-enable-decompilation-support t)
+  :config
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t)))
   :hook
   ;; all programming modes
   (python-mode . lsp-deferred)
@@ -481,6 +503,7 @@ just do copies of the init file."
   (lsp-mode . lsp-enable-which-key-integration)
 
   :commands (lsp lsp-deferred))
+
 (use-package lsp-ui
   :config
   (setq lsp-ui-sideline-show-code-actions t)
@@ -548,6 +571,24 @@ just do copies of the init file."
 (use-package vterm)
 (use-package multi-vterm :ensure t)
 
+(use-package with-venv)
+(use-package pyvenv-auto)
+
+;; https://emacs-lsp.github.io/dap-mode/page/python-poetry-pyenv/
+(use-package dap-mode
+  :after lsp-mode
+  :commands dap-debug
+  :hook ((python-mode . dap-ui-mode) (python-mode . dap-mode))
+  :config
+  (require 'dap-python)
+  (setq dap-python-debugger 'debugpy)
+  (defun dap-python--pyenv-executable-find (command)
+    (with-venv (executable-find "python")))
+
+  (add-hook 'dap-stopped-hook
+            (lambda (arg) (call-interactively #'dap-hydra))))
+
+
 ;; Collected key bindings__________________________________________________________
 
 (use-package general
@@ -568,6 +609,7 @@ just do copies of the init file."
    "C-c C-m v" 'multi-vterm
    ))
 
+(load (expand-file-name "~/.roswell/helper.el"))
 
 ;; Finish package__________________________________________________________________
 
